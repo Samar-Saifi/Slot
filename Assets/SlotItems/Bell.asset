@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de77fc7c5e19598429ce91c1c614dafb, type: 3}
+  m_Name: Bell
+  m_EditorClassIdentifier: 
+  icon: {fileID: -2391669244243282240, guid: e756af357ad90b64981544ded21146b8, type: 3}
+  type: 1
+  payoutMultiplier: 4
+  weight: 15
