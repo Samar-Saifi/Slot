@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -12,7 +11,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        
         instance = this;
     }
 
@@ -53,5 +52,4 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"Won: {won}");
     }
-
 }

@@ -100,6 +100,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inc_Bet"",
+                    ""type"": ""Button"",
+                    ""id"": ""fda258db-5f3b-4cac-83d8-bdcb4a6fb2a1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dec_Bet"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7028b00-004f-4342-bdb6-05f88eb9ef66"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -133,6 +151,50 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""Spin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92963dfe-85b9-4230-b2d8-a2b82a3b3def"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inc_Bet"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d044688a-32c3-42fe-9b30-fce60a1a91da"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inc_Bet"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6294d2b-ae78-46bf-8606-acf8d7e135a9"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dec_Bet"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8232a07b-8869-44c0-8b50-7b8d67dd0a7d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dec_Bet"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -721,6 +783,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Spin = m_Player.FindAction("Spin", throwIfNotFound: true);
+        m_Player_Inc_Bet = m_Player.FindAction("Inc_Bet", throwIfNotFound: true);
+        m_Player_Dec_Bet = m_Player.FindAction("Dec_Bet", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -815,6 +879,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Spin;
+    private readonly InputAction m_Player_Inc_Bet;
+    private readonly InputAction m_Player_Dec_Bet;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -830,6 +896,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Spin".
         /// </summary>
         public InputAction @Spin => m_Wrapper.m_Player_Spin;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Inc_Bet".
+        /// </summary>
+        public InputAction @Inc_Bet => m_Wrapper.m_Player_Inc_Bet;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Dec_Bet".
+        /// </summary>
+        public InputAction @Dec_Bet => m_Wrapper.m_Player_Dec_Bet;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -859,6 +933,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Spin.started += instance.OnSpin;
             @Spin.performed += instance.OnSpin;
             @Spin.canceled += instance.OnSpin;
+            @Inc_Bet.started += instance.OnInc_Bet;
+            @Inc_Bet.performed += instance.OnInc_Bet;
+            @Inc_Bet.canceled += instance.OnInc_Bet;
+            @Dec_Bet.started += instance.OnDec_Bet;
+            @Dec_Bet.performed += instance.OnDec_Bet;
+            @Dec_Bet.canceled += instance.OnDec_Bet;
         }
 
         /// <summary>
@@ -873,6 +953,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Spin.started -= instance.OnSpin;
             @Spin.performed -= instance.OnSpin;
             @Spin.canceled -= instance.OnSpin;
+            @Inc_Bet.started -= instance.OnInc_Bet;
+            @Inc_Bet.performed -= instance.OnInc_Bet;
+            @Inc_Bet.canceled -= instance.OnInc_Bet;
+            @Dec_Bet.started -= instance.OnDec_Bet;
+            @Dec_Bet.performed -= instance.OnDec_Bet;
+            @Dec_Bet.canceled -= instance.OnDec_Bet;
         }
 
         /// <summary>
@@ -1180,6 +1266,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSpin(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Inc_Bet" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInc_Bet(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Dec_Bet" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDec_Bet(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

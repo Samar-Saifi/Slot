@@ -11,7 +11,6 @@ public class ReelController : MonoBehaviour
 
     [Header("SPIN")] [SerializeField] private float m_spinSpeed = 12f;
     [SerializeField] private float m_acceleration = 25f;
-    [SerializeField] private float m_deceleration = 10f;
     [SerializeField] private float m_stopDistance = 0.2f;
     [SerializeField] private float m_stopDuration = 0.25f;
 

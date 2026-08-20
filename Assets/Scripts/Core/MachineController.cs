@@ -41,7 +41,11 @@ public class MachineController : MonoBehaviour
     {
         SCO_SlotItem target = m_RNG.Pick(m_SlotItems, s=>s.weight);
         m_handleAnimator.Play("HandlePlay"); //Using direct name because there is just one animation else I would be using hashed values
-        if (m_currentReel == -1) { foreach (var reel in m_Reels){ reel.RequestSpin(); } m_currentReel++; }
+        if (m_currentReel == -1)
+        {
+            foreach (var reel in m_Reels){ reel.RequestSpin(); } 
+            m_currentReel++;
+        }
         else { m_Reels[m_currentReel].RequestSpin();
             m_currentReel++;
         }
