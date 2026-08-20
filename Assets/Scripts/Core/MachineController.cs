@@ -5,19 +5,24 @@ using UnityEngine.InputSystem;
 public class MachineController : MonoBehaviour
 {
     [SerializeField] private Animator m_handleAnimator;
-    [SerializeField] private ReelController m_Reel;
+    [SerializeField] private ReelController[] m_Reels;
     [SerializeField] private SCO_SlotItem[] m_SlotItems;
     
     private RNG m_RNG;
     private float m_cooldown = 0.5f;
     private float m_cooldownDuration = 0.5f;
 
+    private int m_currentReel = -1; //To keep track of the reel which is to be stopped next
+
     private InputSystem_Actions m_inputSytem;
     private void Awake()
     {
-        m_RNG = new RNG();
-        m_Reel.ReelInit(m_SlotItems, m_RNG);
         m_inputSytem = new InputSystem_Actions();
+        m_RNG = new RNG();
+        foreach(var reel in m_Reels)
+        { 
+            reel.ReelInit(m_SlotItems, m_RNG);
+        }
     }
     
     private void OnEnable()
@@ -32,12 +37,22 @@ public class MachineController : MonoBehaviour
         m_inputSytem.Disable();
     }
 
-    private void PullHandle(InputAction.CallbackContext context)
+    public void PullHandle(InputAction.CallbackContext context)
     {
-        if (m_cooldown > 0) return;
         SCO_SlotItem target = m_RNG.Pick(m_SlotItems, s=>s.weight);
         m_handleAnimator.Play("HandlePlay"); //Using direct name because there is just one animation else I would be using hashed values
-        m_Reel.RequestSpin();
+        if (m_currentReel == -1) { foreach (var reel in m_Reels){ reel.RequestSpin(); } m_currentReel++; }
+        else { m_Reels[m_currentReel].RequestSpin();
+            m_currentReel++;
+        }
+        
+        //Checking if all reels stopped....If yes, then CheckingResult and Resetting Machine
+        if (m_currentReel >= m_Reels.Length)
+        {
+            m_currentReel = -1;
+            GameManager.instance.CheckSlots(m_Reels);
+        }
+        
         m_cooldown = m_cooldownDuration;
     }
     
@@ -45,10 +60,6 @@ public class MachineController : MonoBehaviour
     {
         m_cooldown -= Time.deltaTime;
         if(m_cooldown > 0) return; 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
-        }
     }
 }
 

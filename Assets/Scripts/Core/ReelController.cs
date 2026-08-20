@@ -193,4 +193,29 @@ public class ReelController : MonoBehaviour
 
         return closestSymbol;
     }
+
+    public SCO_SlotItem GetReelSlot()
+    {
+        Transform closestSymbol = GetClosestSymbolToCenter();
+        if (closestSymbol == null)
+        {
+            Debug.LogError($"{name}: No symbols found on reel.");
+            return null;
+        }
+
+        ReelSymbol reelSymbol = closestSymbol.GetComponent<ReelSymbol>();
+        if (reelSymbol == null)
+        {
+            Debug.LogError($"{name}: Symbol {closestSymbol.name} has no ReelSymbol component.");
+            return null;
+        }
+        if (reelSymbol.item == null)
+        {
+            Debug.LogError($"{name}: Symbol {closestSymbol.name} has no SlotItem.");
+            return null;
+        }
+
+        return reelSymbol.item;
+    }
+
 }
