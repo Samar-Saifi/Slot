@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 2193077994593488821, guid: 3804e652fad04f84f9cc4a0ff1f390a9, type: 3}
   type: 3
-  payoutMultiplier: 7
+  payoutMultiplier: 2
   weight: 8

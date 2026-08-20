@@ -28,21 +28,29 @@ public class MachineController : MonoBehaviour
     private void OnEnable()
     {
         m_inputSytem.Enable();
-        m_inputSytem.Player.Spin.performed += PullHandle;
+        m_inputSytem.Player.Spin.performed += PullHandle_InputAction;
     }
     
     private void OnDisable()
     {
-        m_inputSytem.Player.Spin.performed -= PullHandle;
+        m_inputSytem.Player.Spin.performed -= PullHandle_InputAction;
         m_inputSytem.Disable();
     }
 
-    public void PullHandle(InputAction.CallbackContext context)
+    private void PullHandle_InputAction(InputAction.CallbackContext context)
     {
+        PullHandle();
+    }
+    
+    
+    public void PullHandle()
+    {
+        
         SCO_SlotItem target = m_RNG.Pick(m_SlotItems, s=>s.weight);
         m_handleAnimator.Play("HandlePlay"); //Using direct name because there is just one animation else I would be using hashed values
         if (m_currentReel == -1)
         {
+            if(!BettingManager.instance.TryPlaceBet()) return;
             foreach (var reel in m_Reels){ reel.RequestSpin(); } 
             m_currentReel++;
         }

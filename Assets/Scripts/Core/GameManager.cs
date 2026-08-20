@@ -49,7 +49,12 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+        
+        if(!won) return;
 
         Debug.Log($"Won: {won}");
+        int currentAmount = BettingManager.instance.m_balance;
+        int earnings = currentAmount * (int)firstSlot.payoutMultiplier;
+        BettingManager.instance.AddWinnings(earnings);
     }
 }

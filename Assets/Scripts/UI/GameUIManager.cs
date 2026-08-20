@@ -16,7 +16,7 @@ public class GameUIManager : MonoBehaviour
 
     private void UpdateBet(int betAmount)
     {
-        m_scoreText.text = betAmount.ToString();
+        m_BetText.text = $"Bet: {betAmount}";
     }
     
     private void UpdateBalance(int balance)

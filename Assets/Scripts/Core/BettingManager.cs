@@ -30,13 +30,13 @@ public class BettingManager : MonoBehaviour
     public void IncreaseBet()
     {
         m_betIndex = Mathf.Clamp(m_betIndex + 1, 0, m_availableBets.Length-1);
-        OnBetChanged?.Invoke(m_betIndex);
+        OnBetChanged?.Invoke(m_availableBets[m_betIndex]);
     }
 
     public void DecreaseBet()
     {
-        m_betIndex = Mathf.Clamp(m_betIndex + 1, 0, m_availableBets.Length-1);
-        OnBetChanged?.Invoke(m_betIndex);
+        m_betIndex = Mathf.Clamp(m_betIndex - 1, 0, m_availableBets.Length-1);
+        OnBetChanged?.Invoke(m_availableBets[m_betIndex]);
     }
 
     public bool TryPlaceBet()
