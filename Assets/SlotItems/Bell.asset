@@ -15,4 +15,4 @@ MonoBehaviour:
   icon: {fileID: -2391669244243282240, guid: e756af357ad90b64981544ded21146b8, type: 3}
   type: 1
   payoutMultiplier: 4
-  weight: 15
+  weight: 7
